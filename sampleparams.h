@@ -19,7 +19,6 @@ public:
 	{
 		return mySample;
 	}
-	void updateSampleInfo();
 
 protected:
 	void changeEvent(QEvent *e);
@@ -31,6 +30,7 @@ private:
 public slots:
 	void onSampleStarted();
 	void onSampleStopped();
+	void updateSampleInfo();
 
 private slots:
 	void onKeyComboChanged(int index);

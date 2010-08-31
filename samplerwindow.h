@@ -23,6 +23,7 @@ protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 	void closeEvent(QCloseEvent *);
+	void showEvent(QShowEvent *);
 private:
 	void saveSamplerState(const QString& file);
 	void loadSamplerState(const QString& file);
@@ -35,12 +36,16 @@ private:
 	QString stateName;
 	QString stateFile;
 	bool stateSaved;
+	bool firstShow;
 	static QString lastStateDir;
 
 private slots:
+	void onSampleChanged();
+
+private slots:
 	void on_actionEdit_sample_triggered();
- void on_actionRemove_sample_triggered();
- void on_actionClear_state_triggered();
+	void on_actionRemove_sample_triggered();
+	void on_actionClear_state_triggered();
 	void on_actionRestore_state_triggered();
 	void on_actionSave_state_triggered();
 	void on_actionAdd_sample_triggered();
