@@ -1,0 +1,26 @@
+#summary Turns your keyboard into a digital sampler
+#labels Sound,Music,Qt,FMOD
+
+= Introduction =
+
+DamnSampler is an opensource crossplatform audio sampler written using C++, [http://qt.nokia.com Qt4 Framework] and [http://www.fmod.org FMOD library].
+
+
+= Details =
+
+Features:
+ * WAV, MP3 and OGG support (full list of supported formats see at FMOD's page)
+ * Three kinds of samples: regular, simple loop and auto loop
+ * Custom keyboard keys for each sample
+ * Possibility to make chords (one key - several samples)
+ * Saving/restoring sampler state
+ * Pan/volume support
+ * Changing pan/volume/key of sample during playing
+ * Fadeout effect
+ * Playing sample indication
+
+Planned features:
+ * FMOD's DSP/Reverb
+ * Tone generation
+ * Direct recording
+ * Sample shifting 
