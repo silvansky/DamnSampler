@@ -103,6 +103,12 @@ void Sample::stop()
 	}
 }
 
+void Sample::setMute(bool mute)
+{
+	if (channel)
+		channel->setMute(mute);
+}
+
 void Sample::setVolume(int newVolume)
 {
 	volume = newVolume;

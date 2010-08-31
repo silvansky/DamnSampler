@@ -18,6 +18,7 @@ SampleParams::SampleParams(Sample * sample, QWidget *parent) :
 	connect(ui->noLoopRadio, SIGNAL(toggled(bool)), SLOT(onRadioChanged(bool)));
 	connect(ui->simpleLoopRadio, SIGNAL(toggled(bool)), SLOT(onRadioChanged(bool)));
 	connect(ui->autoLoopRadio, SIGNAL(toggled(bool)), SLOT(onRadioChanged(bool)));
+	connect(ui->muteButton, SIGNAL(toggled(bool)), mySample, SLOT(setMute(bool)));
 }
 
 SampleParams::~SampleParams()
