@@ -76,6 +76,7 @@ signals:
 public slots:
 	void start();
 	void stop();
+	void setMute(bool mute);
 	// props
 	void setVolume(int volume);
 	void setPanning(int pan);
