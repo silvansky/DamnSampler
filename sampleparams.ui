@@ -58,9 +58,16 @@
         <item>
          <widget class="QToolButton" name="muteButton">
           <property name="text">
-           <string>M</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="images.qrc">
+            <normaloff>:/mute.png</normaloff>:/mute.png</iconset>
           </property>
           <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="autoRaise">
            <bool>true</bool>
           </property>
          </widget>
@@ -200,6 +207,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

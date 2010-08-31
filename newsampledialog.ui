@@ -73,7 +73,11 @@
        <item>
         <widget class="QToolButton" name="previewButton">
          <property name="text">
-          <string>...</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="images.qrc">
+           <normaloff>:/play.png</normaloff>:/play.png</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -81,8 +85,8 @@
          <property name="checked">
           <bool>false</bool>
          </property>
-         <property name="arrowType">
-          <enum>Qt::RightArrow</enum>
+         <property name="autoRaise">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -170,6 +174,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

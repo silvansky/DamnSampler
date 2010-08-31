@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="stop.png">images/stop.png</file>
+        <file alias="add.png">images/add.png</file>
+        <file alias="clear.png">images/clear.png</file>
+        <file alias="edit.png">images/edit.png</file>
+        <file alias="open.png">images/open.png</file>
+        <file alias="save.png">images/save.png</file>
+        <file alias="settings.png">images/settings.png</file>
+        <file alias="mute.png">images/mute.png</file>
+        <file alias="remove.png">images/remove.png</file>
+        <file alias="play.png">images/play.png</file>
+    </qresource>
+</RCC>
