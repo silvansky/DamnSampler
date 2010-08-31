@@ -5,6 +5,7 @@
 #include <fmod_errors.h>
 #include <QKeyEvent>
 #include <QCloseEvent>
+#include <QShowEvent>
 #include <QSettings>
 #include <QFileDialog>
 #include <QDomDocument>
@@ -22,7 +23,6 @@ SamplerWindow::SamplerWindow(QWidget *parent) :
 {
 	QSettings s;
 	lastStateDir = s.value("lastStateDir").toString();
-	restoreState(s.value("windowState").toByteArray());
 	if (lastStateDir.isEmpty())
 		lastStateDir = ".";
 	ui->setupUi(this);
@@ -40,6 +40,7 @@ SamplerWindow::SamplerWindow(QWidget *parent) :
 	}
 	running = false;
 	stateSaved = true;
+	firstShow = true;
 	ui->actionStop->setEnabled(false);
 }
 
@@ -110,9 +111,38 @@ void SamplerWindow::keyReleaseEvent(QKeyEvent * ke)
 
 void SamplerWindow::closeEvent(QCloseEvent * ce)
 {
+	if (!stateSaved)
+	{
+		int code = QMessageBox::question(this, "State not saved", "Do you want to save current state?", QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+		switch (code)
+		{
+		case QMessageBox::Yes:
+			on_actionSave_state_triggered();
+			break;
+		case QMessageBox::Cancel:
+			ce->ignore();
+			return;
+			break;
+		default:
+			break;
+		}
+	}
 	QSettings s;
 	s.setValue("windowState", saveState());
+	s.setValue("windowGeometry", saveGeometry());
 	QMainWindow::closeEvent(ce);
+}
+
+void SamplerWindow::showEvent(QShowEvent * e)
+{
+	if (firstShow)
+	{
+		firstShow = false;
+		QSettings s;
+		restoreState(s.value("windowState").toByteArray());
+		restoreGeometry(s.value("windowGeometry").toByteArray());
+	}
+	QMainWindow::showEvent(e);
 }
 
 void SamplerWindow::saveSamplerState(const QString& file)
@@ -140,6 +170,7 @@ void SamplerWindow::saveSamplerState(const QString& file)
 			QFileInfo info(file);
 			stateName = info.baseName();
 			stateFile = file;
+			setWindowTitle(stateName + " - DamnSampler");
 		}
 		else
 			QMessageBox::critical(this, "Error", QString("Can\'t open file %1 for writing!").arg(file), QMessageBox::Ok);
@@ -153,12 +184,17 @@ void SamplerWindow::loadSamplerState(const QString& file)
 		QFile f(file);
 		if (f.open(QFile::ReadOnly))
 		{
-			QDomDocument doc(QString::fromUtf8(f.readAll()));
+			QByteArray fc = f.readAll();
+			qDebug() << fc;
+			QDomDocument doc;
+			doc.setContent(QString::fromUtf8(fc));
 			if (!doc.isNull())
 			{
+				qDebug() << doc.firstChild().nodeName();
 				QDomElement root = doc.firstChildElement("SamplerState");
 				if (!root.isNull())
 				{
+					on_actionClear_state_triggered();
 					QList<Sample*> tempList;
 					QDomElement sampleEl = root.firstChildElement("Sample");
 					while (!sampleEl.isNull())
@@ -174,6 +210,16 @@ void SamplerWindow::loadSamplerState(const QString& file)
 						sampleEl = sampleEl.nextSiblingElement("Sample");
 					}
 					samples = tempList;
+					foreach (Sample* sample, samples)
+					{
+						SampleParams * sp = new SampleParams(sample);
+						ui->samplesWidget->layout()->addWidget(sp);
+					}
+					stateSaved = true;
+					QFileInfo info(file);
+					stateName = info.baseName();
+					stateFile = file;
+					setWindowTitle(stateName + " - DamnSampler");
 				}
 				else
 					QMessageBox::critical(this, "Error", QString("File %1 is not a valid state file!").arg(file), QMessageBox::Ok);
@@ -184,6 +230,11 @@ void SamplerWindow::loadSamplerState(const QString& file)
 		else
 			QMessageBox::critical(this, "Error", QString("Can\'t open file %1!").arg(file), QMessageBox::Ok);
 	}
+}
+
+void SamplerWindow::onSampleChanged()
+{
+	stateSaved = false;
 }
 
 void SamplerWindow::on_actionAdd_sample_triggered()
@@ -200,6 +251,7 @@ void SamplerWindow::on_actionAdd_sample_triggered()
 			samples.append(sample);
 			SampleParams * sp = new SampleParams(sample);
 			ui->samplesWidget->layout()->addWidget(sp);
+			stateSaved = false;
 		}
 		dlg->deleteLater();
 	}
@@ -237,7 +289,7 @@ void SamplerWindow::on_actionSave_state_triggered()
 {
 	if (stateName.isEmpty() || stateFile.isEmpty())
 	{
-		QString file = QFileDialog::getSaveFileName(this, "Save state", lastStateDir, "Sampler state files (*ssf)");
+		QString file = QFileDialog::getSaveFileName(this, "Save state", lastStateDir, "Sampler state files (*.ssf)");
 		QFileInfo finfo(file);
 		lastStateDir = finfo.dir().absolutePath();
 		saveSamplerState(file);
@@ -261,6 +313,17 @@ void SamplerWindow::on_actionClear_state_triggered()
 	foreach(Sample* sample, samples)
 		sample->deleteLater();
 	samples.clear();
+	foreach(QObject * obj, ui->samplesWidget->children())
+	{
+		SampleParams * sp = qobject_cast<SampleParams *>(obj);
+		if (sp)
+		{
+			sp->hide();
+			sp->deleteLater();
+		}
+	}
+	stateSaved = true;
+	setWindowTitle("DamnSampler");
 }
 
 void SamplerWindow::on_actionRemove_sample_triggered()

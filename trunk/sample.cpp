@@ -142,7 +142,10 @@ void Sample::setName(const QString & newName)
 void Sample::setFileName(const QString & newFile)
 {
 	sampleFileName = newFile;
-	needReloading = true;
+	if (!playing)
+		reload();
+	else
+		needReloading = true;
 	emit changed();
 }
 
