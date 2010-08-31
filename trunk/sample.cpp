@@ -14,6 +14,7 @@ void Sample::init()
 	playing = false;
 	sound = 0;
 	channel = 0;
+	muted = false;
 	reload();
 }
 
@@ -87,6 +88,7 @@ void Sample::start()
 	{
 		channel->setVolume(volume / 100.0);
 		channel->setPan(panning / 100.0);
+		channel->setMute(muted);
 		FMOD_RESULT result = channel->setPaused(false);
 		resOk(result);
 		emit started();
@@ -105,6 +107,7 @@ void Sample::stop()
 
 void Sample::setMute(bool mute)
 {
+	muted = mute;
 	if (channel)
 		channel->setMute(mute);
 }

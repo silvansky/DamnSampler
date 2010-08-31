@@ -97,6 +97,7 @@ private:
 	int panning;
 	int oldVolume;
 	bool needReloading;
+	bool muted;
 	// FMOD
 	FMOD::System * system;
 	FMOD::Sound * sound;

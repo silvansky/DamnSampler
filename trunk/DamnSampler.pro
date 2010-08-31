@@ -28,3 +28,10 @@ FORMS    += samplerwindow.ui \
 
 INCLUDEPATH += FMOD/inc
 LIBS += -LFMOD/lib -lfmodex_vc
+
+RESOURCES += \
+    images.qrc
+
+win32: {
+	RC_FILE = damnsampler.rc
+}

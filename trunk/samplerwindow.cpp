@@ -361,3 +361,8 @@ void SamplerWindow::on_actionEdit_sample_triggered()
 		}
 	}
 }
+
+void SamplerWindow::on_actionExit_triggered()
+{
+	close();
+}

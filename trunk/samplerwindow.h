@@ -43,6 +43,7 @@ private slots:
 	void onSampleChanged();
 
 private slots:
+	void on_actionExit_triggered();
 	void on_actionEdit_sample_triggered();
 	void on_actionRemove_sample_triggered();
 	void on_actionClear_state_triggered();
