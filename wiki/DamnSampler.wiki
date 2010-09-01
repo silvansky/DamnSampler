@@ -4,7 +4,10 @@
 = Introduction =
 
 DamnSampler is an opensource crossplatform audio sampler written using C++, [http://qt.nokia.com Qt4 Framework] and [http://www.fmod.org FMOD library].
+
 First working version was written in two evenins of creative crisis at work.
+
+DamnSampler was made to replace the music instrument in live perfomances and studio recordings. That's why it doesn't present a timescale with blocks, bpm selection and other things for looping dj-like music making.
 
 = Details =
 
@@ -24,3 +27,4 @@ Planned features:
  * Tone generation
  * Direct recording
  * Sample shifting
+ * Sample recording
