@@ -9,7 +9,7 @@ First working version was written in two evenins of creative crisis at work.
 
 DamnSampler was made to replace the music instrument in live perfomances and studio recordings. That's why it doesn't present a timescale with blocks, bpm selection and other things for looping dj-like music making. It is just some kind of mellotron. No sample shifting is supported yet, but it is a planned feature.
 
-If someone wants to help me with program icons/logos or with free sample banks to ship with DamnSampler, you are welcome! Contact me by mail.
+If someone wants to help me with program icons/logos or with free sample banks to ship with DamnSampler, you are welcome! Contact me by mail v.silvansky [[at]] gmail [[dot]] com.
 
 = Details =
 
