@@ -27,11 +27,15 @@ FORMS    += samplerwindow.ui \
 	newsampledialog.ui
 
 INCLUDEPATH += FMOD/inc
-LIBS += -LFMOD/lib -lfmodex_vc
+
+unix: {
+	LIBS += -lfmodex
+}
 
 RESOURCES += \
     images.qrc
 
 win32: {
 	RC_FILE = damnsampler.rc
+	LIBS += -LFMOD/lib -lfmodex_vc
 }
